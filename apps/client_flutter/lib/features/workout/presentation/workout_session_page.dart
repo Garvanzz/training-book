@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/api/api_client.dart';
 import '../../../core/data/training_repository.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/press_scale.dart';
 import '../../library/presentation/exercise_detail_page.dart';
 import 'workout_summary_page.dart';
 
@@ -304,10 +305,15 @@ class _WorkoutSessionPageState extends State<WorkoutSessionPage> {
                     Expanded(
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: LinearProgressIndicator(
-                          value: _totalSets == 0 ? 0 : _completedSets / _totalSets,
-                          minHeight: 7,
-                          backgroundColor: AppColors.surfaceInteractive,
+                        child: TweenAnimationBuilder<double>(
+                          tween: Tween(end: _totalSets == 0 ? 0 : _completedSets / _totalSets),
+                          duration: AppMotion.slow,
+                          curve: AppMotion.easeOut,
+                          builder: (context, value, _) => LinearProgressIndicator(
+                            value: value,
+                            minHeight: 7,
+                            backgroundColor: AppColors.surfaceInteractive,
+                          ),
                         ),
                       ),
                     ),
@@ -395,12 +401,14 @@ class _WorkoutSessionPageState extends State<WorkoutSessionPage> {
         minimum: const EdgeInsets.all(16),
         child: SizedBox(
           width: double.infinity,
-          child: FilledButton.icon(
-            onPressed: _isCompleting ? null : _complete,
-            icon: _isCompleting
-                ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                : const Icon(Icons.check_circle_outline),
-            label: const Text('完成训练'),
+          child: PressScale(
+            child: FilledButton.icon(
+              onPressed: _isCompleting ? null : _complete,
+              icon: _isCompleting
+                  ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
+                  : const Icon(Icons.check_circle_outline),
+              label: const Text('完成训练'),
+            ),
           ),
         ),
       ),
@@ -485,7 +493,18 @@ class _SetRow extends StatelessWidget {
           onPressed: saving ? null : onSave,
           icon: saving
               ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2))
-              : Icon(entry.done ? Icons.check_circle : Icons.check_circle_outline, color: entry.done ? AppColors.accent : null),
+              : AnimatedSwitcher(
+                  duration: AppMotion.fast,
+                  transitionBuilder: (child, animation) => ScaleTransition(
+                    scale: CurvedAnimation(parent: animation, curve: AppMotion.easeOut),
+                    child: child,
+                  ),
+                  child: Icon(
+                    entry.done ? Icons.check_circle : Icons.check_circle_outline,
+                    key: ValueKey(entry.done),
+                    color: entry.done ? AppColors.accent : null,
+                  ),
+                ),
         ),
       ],
     );
