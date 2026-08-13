@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../../core/data/training_repository.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/appear_in.dart';
+import '../../../core/widgets/hover_lift.dart';
 
 class ProgressPage extends StatefulWidget {
   const ProgressPage({super.key, required this.repository});
@@ -94,7 +96,33 @@ class _TrainingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final name = (entry['plan_name'] as String?)?.trim();
     final date = _date(entry);
-    return Card(child: InkWell(onTap: onTap, borderRadius: BorderRadius.circular(12), child: Padding(padding: const EdgeInsets.all(16), child: Row(children: [const Icon(Icons.check_circle_outline, color: AppColors.accent), const SizedBox(width: 12), Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(name?.isNotEmpty == true ? name! : '训练计划', style: const TextStyle(fontWeight: FontWeight.w800)), const SizedBox(height: 4), Text('${_time(date)} 开始', style: const TextStyle(color: AppColors.muted, fontSize: 12))])), const Icon(Icons.chevron_right, color: AppColors.muted)]))));
+    return AppearIn(
+      child: HoverLift(
+        builder: (context, hovered) => Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: hoverBorder(hovered)),
+          ),
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(16),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(children: [
+                const Icon(Icons.check_circle_outline, color: AppColors.accent),
+                const SizedBox(width: 12),
+                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Text(name?.isNotEmpty == true ? name! : '训练计划', style: const TextStyle(fontWeight: FontWeight.w800)),
+                  const SizedBox(height: 4),
+                  Text('${_time(date)} 开始', style: const TextStyle(color: AppColors.muted, fontSize: 12)),
+                ])),
+                const Icon(Icons.chevron_right, color: AppColors.muted),
+              ]),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

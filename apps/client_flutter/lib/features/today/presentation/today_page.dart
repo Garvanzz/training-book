@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../../core/data/training_repository.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/appear_in.dart';
+import '../../../core/widgets/hover_lift.dart';
+import '../../../core/widgets/press_scale.dart';
 import '../../workout/presentation/workout_session_page.dart';
 
 class TodayPage extends StatefulWidget {
@@ -42,16 +45,27 @@ class _TodayPageState extends State<TodayPage> {
       FutureBuilder<Map<String, dynamic>?>(future: _active, builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) return const Card(child: Padding(padding: EdgeInsets.all(24), child: LinearProgressIndicator()));
         final workout = snapshot.data;
-        if (workout == null) return _StartCard(onOpenPlans: widget.onOpenPlans);
+        if (workout == null) return AppearIn(child: _StartCard(onOpenPlans: widget.onOpenPlans));
         final name = (workout['plan_name'] as String?)?.trim();
-        return Card(color: AppColors.surfaceRaised, child: Padding(padding: const EdgeInsets.all(24), child: Row(children: [
-          Container(width: 42, height: 42, decoration: BoxDecoration(color: AppColors.accent, borderRadius: BorderRadius.circular(12)), child: const Icon(Icons.play_arrow_rounded, color: AppColors.accentInk)),
-          const SizedBox(width: 16),
-          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(name?.isNotEmpty == true ? name! : '正在进行的训练', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)), const SizedBox(height: 4), const Text('继续完成，或明确放弃本次训练', style: TextStyle(color: AppColors.muted))])),
-          TextButton(onPressed: () => _abandon(workout), child: const Text('放弃')),
-          const SizedBox(width: 8),
-          FilledButton(onPressed: () => _resume(workout), child: const Text('继续训练')),
-        ])));
+        return AppearIn(
+          child: HoverLift(
+            builder: (context, hovered) => Card(
+              color: AppColors.surfaceRaised,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: hoverBorder(hovered)),
+              ),
+              child: Padding(padding: const EdgeInsets.all(24), child: Row(children: [
+                Container(width: 42, height: 42, decoration: BoxDecoration(color: AppColors.accent, borderRadius: BorderRadius.circular(12)), child: const Icon(Icons.play_arrow_rounded, color: AppColors.accentInk)),
+                const SizedBox(width: 16),
+                Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [Text(name?.isNotEmpty == true ? name! : '正在进行的训练', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700)), const SizedBox(height: 4), const Text('继续完成，或明确放弃本次训练', style: TextStyle(color: AppColors.muted))])),
+                TextButton(onPressed: () => _abandon(workout), child: const Text('放弃')),
+                const SizedBox(width: 8),
+                PressScale(child: FilledButton(onPressed: () => _resume(workout), child: const Text('继续训练'))),
+              ])),
+            ),
+          ),
+        );
       }),
       if (!widget.repository.isOnline || widget.repository.pendingOperationCount > 0) ...[const SizedBox(height: 12), _SyncLine(repository: widget.repository)],
     ])),
@@ -62,7 +76,24 @@ class _StartCard extends StatelessWidget {
   const _StartCard({this.onOpenPlans});
   final VoidCallback? onOpenPlans;
   @override
-  Widget build(BuildContext context) => Card(color: AppColors.surfaceRaised, child: Padding(padding: const EdgeInsets.all(24), child: Row(children: [Container(width: 42, height: 42, decoration: BoxDecoration(color: AppColors.accent, borderRadius: BorderRadius.circular(12)), child: const Icon(Icons.play_arrow_rounded, color: AppColors.accentInk)), const SizedBox(width: 16), const Expanded(child: Text('选择一份训练计划开始', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700))), FilledButton(onPressed: onOpenPlans, child: const Text('训练计划'))])));
+  Widget build(BuildContext context) => HoverLift(
+    builder: (context, hovered) => Card(
+      color: AppColors.surfaceRaised,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: hoverBorder(hovered)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Row(children: [
+          Container(width: 42, height: 42, decoration: BoxDecoration(color: AppColors.accent, borderRadius: BorderRadius.circular(12)), child: const Icon(Icons.play_arrow_rounded, color: AppColors.accentInk)),
+          const SizedBox(width: 16),
+          const Expanded(child: Text('选择一份训练计划开始', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700))),
+          PressScale(child: FilledButton(onPressed: onOpenPlans, child: const Text('训练计划'))),
+        ]),
+      ),
+    ),
+  );
 }
 
 class _SyncLine extends StatelessWidget {
