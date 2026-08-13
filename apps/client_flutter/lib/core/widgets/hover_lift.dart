@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
 /// Desktop hover feedback: lifts the child 2px and exposes the hovered
-/// state so callers can brighten the card border.  No-op on touch devices.
+/// state so callers can brighten the card border.  On touch devices no
+/// hover event fires and the child renders normally.
+///
+/// Note: the builder subtree is rebuilt on every hover flip — keep it to
+/// one card, don't nest heavy lists inside.
 class HoverLift extends StatefulWidget {
   const HoverLift({super.key, required this.builder});
   final Widget Function(BuildContext context, bool hovered) builder;
