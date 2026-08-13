@@ -483,7 +483,7 @@ async def _apply_plan_update(session, operation: SyncOperation) -> OperationResu
         ),
         {"plan_id": operation.entity_id, "version_no": draft["version_no"]},
     )
-    return OperationResult(operation.operation_id, "accepted", server_revision=new_revision)
+    return OperationResult(operation_id=operation.operation_id, result="accepted", server_revision=new_revision)
 
 
 async def _apply_plan_delete(session, operation: SyncOperation) -> OperationResult:
@@ -504,7 +504,7 @@ async def _apply_plan_delete(session, operation: SyncOperation) -> OperationResu
     ).mappings().one_or_none()
     if row is None:
         return _conflict(operation.operation_id, "plan_not_found")
-    return OperationResult(operation.operation_id, "accepted")
+    return OperationResult(operation_id=operation.operation_id, result="accepted")
 
 
 async def _apply_workout_session_create(session, principal: Principal, operation: SyncOperation) -> OperationResult:
@@ -575,7 +575,7 @@ async def _apply_workout_session_update(session, operation: SyncOperation) -> Op
     ).mappings().one_or_none()
     if row is None:
         return _conflict(operation.operation_id, "workout_not_in_progress")
-    return OperationResult(operation.operation_id, "accepted", server_revision=int(row["revision"]))
+    return OperationResult(operation_id=operation.operation_id, result="accepted", server_revision=int(row["revision"]))
 
 
 async def _apply_operation(session, principal: Principal, operation: SyncOperation) -> OperationResult:

@@ -35,6 +35,21 @@ async def import_exercises() -> int:
 
     imported: list[tuple[str, int]] = []
     async with system_transaction() as session:
+        # exercise_versions requires a content author; system imports attribute
+        # to the first active owner account, which bootstrap_owner creates.
+        author_user_id = await session.scalar(
+            text(
+                """
+                SELECT id FROM users
+                WHERE is_owner = true AND is_active = true AND deleted_at IS NULL
+                ORDER BY id
+                LIMIT 1
+                """
+            )
+        )
+        if author_user_id is None:
+            raise ValueError("No active owner account: run bootstrap_owner before import_exercises.")
+
         for path in files:
             payload = json.loads(path.read_text(encoding="utf-8"))
             external_key = str(payload["external_key"])
@@ -64,12 +79,14 @@ async def import_exercises() -> int:
                     INSERT INTO exercise_versions (
                         id, exercise_id, version_no, status, name_zh, name_en,
                         summary, recording_mode, instructions_json, cues_json,
-                        mistakes_json, safety_json, content_hash
+                        mistakes_json, safety_json, content_hash, author_user_id,
+                        change_summary
                     ) VALUES (
                         :id, :exercise_id, 1, 'published', :name_zh, :name_en,
                         :summary, :recording_mode, CAST(:instructions AS jsonb),
                         CAST(:cues AS jsonb), CAST(:mistakes AS jsonb),
-                        CAST(:safety AS jsonb), :content_hash
+                        CAST(:safety AS jsonb), :content_hash, :author_user_id,
+                        :change_summary
                     )
                     """
                 ),
@@ -85,6 +102,8 @@ async def import_exercises() -> int:
                     "mistakes": json.dumps(payload["mistakes"], ensure_ascii=False),
                     "safety": json.dumps(payload["safety_notes"], ensure_ascii=False),
                     "content_hash": _version_content_hash(payload),
+                    "author_user_id": author_user_id,
+                    "change_summary": "system import",
                 },
             )
             await _insert_tags(session, version_id, payload.get("tags") or {})
