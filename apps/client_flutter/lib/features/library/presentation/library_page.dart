@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../../core/api/api_client.dart';
 import '../../../core/data/training_repository.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../core/widgets/appear_in.dart';
 import '../../../core/widgets/hover_lift.dart';
 import 'exercise_detail_page.dart';
 import 'quick_exercise_editor_page.dart';
@@ -113,11 +112,14 @@ class _LibraryPageState extends State<LibraryPage> {
                                 count: drafts.length,
                                 onTap: () => _openDrafts(context, drafts),
                               ),
-                            if (widget.repository.isOwner) ...[const SizedBox(width: 10), FilledButton.icon(
-                              onPressed: _openEditor,
-                              icon: const Icon(Icons.add),
-                              label: const Text('新增动作'),
-                            )],
+                            if (widget.repository.isOwner) ...[
+                              const SizedBox(width: 10),
+                              FilledButton.icon(
+                                onPressed: _openEditor,
+                                icon: const Icon(Icons.add),
+                                label: const Text('新增动作'),
+                              ),
+                            ],
                           ],
                         ),
                         const SizedBox(height: 24),
@@ -139,7 +141,9 @@ class _LibraryPageState extends State<LibraryPage> {
                           search: _search,
                           onSearch: _reload,
                           onOpen: _openPublished,
-                          onRevise: widget.repository.isOwner ? _createRevision : null,
+                          onRevise: widget.repository.isOwner
+                              ? _createRevision
+                              : null,
                         ),
                       ],
                     ),
@@ -313,7 +317,9 @@ class _PublishedContent extends StatelessWidget {
               itemBuilder: (context, index) => _ExerciseCard(
                 exercise: exercises[index],
                 onOpen: () => onOpen(exercises[index]),
-                onRevise: onRevise == null ? null : () => onRevise!(exercises[index]),
+                onRevise: onRevise == null
+                    ? null
+                    : () => onRevise!(exercises[index]),
               ),
             );
           },
@@ -338,75 +344,73 @@ class _ExerciseCard extends StatelessWidget {
     final purposes = (exercise['purposes'] as List<dynamic>? ?? const [])
         .cast<String>();
     final canRevise = onRevise != null;
-    return AppearIn(
-      child: HoverLift(
-        builder: (context, hovered) => Card(
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: hoverBorder(hovered)),
-          ),
-          child: InkWell(
-            onTap: onOpen,
-            borderRadius: BorderRadius.circular(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Container(
-                    width: double.infinity,
-                    color: AppColors.surfaceInteractive,
-                    child: const Center(
-                      child: Icon(
-                        Icons.fitness_center_outlined,
-                        size: 42,
-                        color: AppColors.accent,
-                      ),
+    return HoverLift(
+      builder: (context, hovered) => Card(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: hoverBorder(hovered)),
+        ),
+        child: InkWell(
+          onTap: onOpen,
+          borderRadius: BorderRadius.circular(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Container(
+                  width: double.infinity,
+                  color: AppColors.surfaceInteractive,
+                  child: const Center(
+                    child: Icon(
+                      Icons.fitness_center_outlined,
+                      size: 42,
+                      color: AppColors.accent,
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            name?.isNotEmpty == true ? name! : '未命名动作',
+                            style: const TextStyle(fontWeight: FontWeight.w800),
+                          ),
+                          if (purposes.isNotEmpty ||
+                              summary?.isNotEmpty == true) ...[
+                            const SizedBox(height: 4),
                             Text(
-                              name?.isNotEmpty == true ? name! : '未命名动作',
-                              style: const TextStyle(fontWeight: FontWeight.w800),
-                            ),
-                            if (purposes.isNotEmpty ||
-                                summary?.isNotEmpty == true) ...[
-                              const SizedBox(height: 4),
-                              Text(
-                                purposes.isEmpty
-                                    ? summary!
-                                    : _purposeLabel(purposes.first),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  color: AppColors.muted,
-                                  fontSize: 12,
-                                ),
+                              purposes.isEmpty
+                                  ? summary!
+                                  : _purposeLabel(purposes.first),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: AppColors.muted,
+                                fontSize: 12,
                               ),
-                            ],
+                            ),
                           ],
-                        ),
-                      ),
-                      PopupMenuButton<String>(
-                        enabled: canRevise,
-                        onSelected: (_) => onRevise?.call(),
-                        itemBuilder: (_) => const [
-                          PopupMenuItem(value: 'revise', child: Text('创建修订')),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    PopupMenuButton<String>(
+                      enabled: canRevise,
+                      onSelected: (_) => onRevise?.call(),
+                      itemBuilder: (_) => const [
+                        PopupMenuItem(value: 'revise', child: Text('创建修订')),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
@@ -518,7 +522,9 @@ class _FilterBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final purposes = terms.where((term) => term['dimension'] == 'purpose').toList();
+    final purposes = terms
+        .where((term) => term['dimension'] == 'purpose')
+        .toList();
     if (purposes.isEmpty) return const SizedBox.shrink();
     return Wrap(
       spacing: 12,
@@ -530,7 +536,10 @@ class _FilterBar extends StatelessWidget {
           isDense: true,
           underline: const SizedBox.shrink(),
           items: [
-            const DropdownMenuItem<String?>(value: null, child: Text('阶段用途：全部')),
+            const DropdownMenuItem<String?>(
+              value: null,
+              child: Text('阶段用途：全部'),
+            ),
             for (final term in purposes)
               DropdownMenuItem<String?>(
                 value: term['code']?.toString(),

@@ -5,6 +5,7 @@ import '../../../core/data/training_repository.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/appear_in.dart';
 import '../../../core/widgets/hover_lift.dart';
+import '../../../core/widgets/press_scale.dart';
 import '../../library/presentation/exercise_detail_page.dart';
 import '../../workout/presentation/workout_session_page.dart';
 import 'plan_editor_page.dart';
@@ -75,10 +76,12 @@ class _PlansPageState extends State<PlansPage> {
                     ),
                     IconButton(tooltip: '刷新计划', onPressed: _reload, icon: const Icon(Icons.refresh)),
                     const SizedBox(width: 8),
-                    FilledButton.icon(
-                      onPressed: _createPlan,
-                      icon: const Icon(Icons.add),
-                      label: const Text('新建训练计划'),
+                    PressScale(
+                      child: FilledButton.icon(
+                        onPressed: _createPlan,
+                        icon: const Icon(Icons.add),
+                        label: const Text('新建训练计划'),
+                      ),
                     ),
                   ],
                 ),

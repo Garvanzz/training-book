@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/api/api_client.dart';
 import '../../../core/data/training_repository.dart';
+import '../../../core/widgets/press_scale.dart';
 
 /// 创建普通账号;注册成功后自动登录本机。
 class RegisterPage extends StatefulWidget {
@@ -142,15 +143,17 @@ class _RegisterPageState extends State<RegisterPage> {
                         Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
                       ],
                       const SizedBox(height: 24),
-                      FilledButton(
-                        onPressed: _busy ? null : _register,
-                        child: _busy
-                            ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(strokeWidth: 2),
-                              )
-                            : const Text('注册并登录'),
+                      PressScale(
+                        child: FilledButton(
+                          onPressed: _busy ? null : _register,
+                          child: _busy
+                              ? const SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(strokeWidth: 2),
+                                )
+                              : const Text('注册并登录'),
+                        ),
                       ),
                     ],
                   ),

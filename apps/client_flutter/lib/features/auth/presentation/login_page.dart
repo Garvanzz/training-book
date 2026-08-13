@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../core/api/api_client.dart';
 import '../../../core/data/training_repository.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/press_scale.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -176,17 +177,19 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ],
                         const SizedBox(height: 24),
-                        FilledButton(
-                          onPressed: _busy ? null : _login,
-                          child: _busy
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                  ),
-                                )
-                              : const Text('登录'),
+                        PressScale(
+                          child: FilledButton(
+                            onPressed: _busy ? null : _login,
+                            child: _busy
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : const Text('登录'),
+                          ),
                         ),
                         if (_registrationEnabled)
                           TextButton.icon(
