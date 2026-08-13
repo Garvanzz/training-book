@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+
+# Flutter / Dart
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# Local application data and secrets
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite
+*.sqlite3
+storage/
+.ruff_cache/
+
+# Uploaded media originals (local mode); keep the directory placeholder
+backend/data/media/*
+!backend/data/media/.gitkeep
+
+# Reasonix local config / session metadata
+.reasonix/
+reasonix.toml
+
+# IDE / operating system
+.idea/
+.vscode/
+*.iml
+Thumbs.db
+Desktop.ini

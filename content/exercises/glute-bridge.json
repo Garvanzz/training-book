@@ -1,0 +1,42 @@
+{
+  "external_key": "glute-bridge",
+  "name_zh": "臀桥",
+  "name_en": "Glute Bridge",
+  "aliases": ["仰卧挺髋"],
+  "summary": "仰卧屈膝，伸髋将骨盆抬离地面的基础激活动作。",
+  "primary_purpose": "activation_control",
+  "recording_mode": "load_reps",
+  "instructions": [
+    "仰卧屈膝，双脚踩地与髋同宽，脚跟靠近臀部。",
+    "双手置于身体两侧，掌心向下。",
+    "收紧核心，脚跟蹬地将髋部抬起至躯干与大腿成直线。",
+    "顶端挤压臀部 1 秒，避免腰部反弓。",
+    "控制下放回地面。"
+  ],
+  "cues": [
+    "用脚跟发力，而不是脚尖。",
+    "顶端时骨盆后倾，臀部收紧。",
+    "肋骨保持下沉。",
+    "下放时缓慢有控制。"
+  ],
+  "mistakes": [
+    "腰部过度反弓代偿。",
+    "抬髋过高导致骨盆翻转。",
+    "用腰部发力而不是臀部。",
+    "动作过快失去控制。"
+  ],
+  "safety_notes": [
+    "腰部不适时减小抬髋幅度。",
+    "这是激活类动作，不需要追求大重量。"
+  ],
+  "tags": {
+    "purpose": ["activation_control"],
+    "movement_pattern": ["hinge"],
+    "equipment": ["bodyweight"],
+    "body_region": ["hip"],
+    "skill_level": ["beginner"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["closed_chain"]
+  },
+  "media": []
+}

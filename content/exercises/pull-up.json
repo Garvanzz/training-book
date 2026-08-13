@@ -1,0 +1,42 @@
+{
+  "external_key": "pull-up",
+  "name_zh": "引体向上",
+  "name_en": "Pull-Up",
+  "aliases": ["引体"],
+  "summary": "正握单杠，将身体拉起至下巴过杠的垂直拉徒手动作。",
+  "primary_purpose": "primary_strength",
+  "recording_mode": "load_reps",
+  "instructions": [
+    "正握单杠，双手略宽于肩，身体自然悬垂。",
+    "肩胛先下沉后收，激活背部。",
+    "屈肘将身体拉起，肘部向下向后。",
+    "拉起至下巴过杠或接近胸部贴杠。",
+    "控制身体缓慢下放至手臂伸直，不借摆动。"
+  ],
+  "cues": [
+    "想象肘部往裤兜方向拉。",
+    "启动时先下沉肩胛。",
+    "避免耸肩代偿。",
+    "下放全程保持控制，不要自由落体。"
+  ],
+  "mistakes": [
+    "摆动身体借力。",
+    "只做半程。",
+    "耸肩导致肩部压力。",
+    "下放过快。"
+  ],
+  "safety_notes": [
+    "肩部或肘部急性疼痛时停止并检查握姿。",
+    "力量不足时可用弹力带辅助或先做离心练习。"
+  ],
+  "tags": {
+    "purpose": ["primary_strength"],
+    "movement_pattern": ["vertical_pull"],
+    "equipment": ["bodyweight"],
+    "body_region": ["shoulder_girdle"],
+    "skill_level": ["intermediate"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["closed_chain"]
+  },
+  "media": []
+}

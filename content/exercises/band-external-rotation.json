@@ -1,0 +1,42 @@
+{
+  "external_key": "band-external-rotation",
+  "name_zh": "弹力带肩外旋",
+  "name_en": "Band External Rotation",
+  "aliases": ["弹力带外旋", "肩袖外旋"],
+  "summary": "弹力带固定于体侧，前臂外旋的肩部控制动作。",
+  "primary_purpose": "mobility",
+  "recording_mode": "load_reps",
+  "instructions": [
+    "侧身站立，弹力带一端固定于肘部高度。",
+    "近侧手屈肘 90 度，肘部贴住体侧。",
+    "前臂缓慢向外旋转，对抗弹力带阻力。",
+    "旋转至可控范围后缓慢还原。",
+    "完成一侧后换边重复。"
+  ],
+  "cues": [
+    "肘部全程贴住体侧。",
+    "旋转来自肩关节，而不是手腕。",
+    "动作缓慢，不借助惯性。",
+    "肩胛保持稳定不耸肩。"
+  ],
+  "mistakes": [
+    "肘部离开身体。",
+    "用身体摆动借力。",
+    "旋转幅度过大产生疼痛。",
+    "弹力带阻力过大导致代偿。"
+  ],
+  "safety_notes": [
+    "出现尖锐疼痛立即停止。",
+    "选择能全程控制的轻阻力。"
+  ],
+  "tags": {
+    "purpose": ["mobility"],
+    "movement_pattern": ["rotation"],
+    "equipment": ["band"],
+    "body_region": ["shoulder"],
+    "skill_level": ["beginner"],
+    "plane": ["transverse"],
+    "kinetic_chain": ["open_chain"]
+  },
+  "media": []
+}

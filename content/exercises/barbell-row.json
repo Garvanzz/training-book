@@ -1,0 +1,42 @@
+{
+  "external_key": "barbell-row",
+  "name_zh": "杠铃划船",
+  "name_en": "Barbell Row",
+  "aliases": ["俯身杠铃划船", "划船"],
+  "summary": "俯身将杠铃拉向腹部下方的水平拉动作。",
+  "primary_purpose": "accessory",
+  "recording_mode": "load_reps",
+  "instructions": [
+    "双手与肩同宽握杠，屈髋俯身约 45 度，背部保持中立。",
+    "膝盖微屈，杠铃自然下垂于膝前。",
+    "绷紧核心，将杠铃拉向腹部下方。",
+    "肘部贴近身体向后上方移动，肩胛后收。",
+    "控制下放回起始位置，保持躯干角度不变。"
+  ],
+  "cues": [
+    "用肘部引导，而不是用手腕。",
+    "拉到位时挤压肩胛。",
+    "身体保持稳定，不要上下晃动。",
+    "下放时同样保持张力。"
+  ],
+  "mistakes": [
+    "起身借力造成躯干晃动。",
+    "耸肩拉杠。",
+    "弓背俯身。",
+    "行程过短。"
+  ],
+  "safety_notes": [
+    "腰部不适时减少俯身角度或改用器械划船。",
+    "保持核心绷紧，避免腰部代偿。"
+  ],
+  "tags": {
+    "purpose": ["accessory"],
+    "movement_pattern": ["horizontal_pull"],
+    "equipment": ["barbell"],
+    "body_region": ["shoulder_girdle"],
+    "skill_level": ["basic"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["open_chain"]
+  },
+  "media": []
+}

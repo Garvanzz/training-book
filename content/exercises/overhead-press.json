@@ -1,0 +1,42 @@
+{
+  "external_key": "overhead-press",
+  "name_zh": "站姿杠铃推举",
+  "name_en": "Standing Overhead Press",
+  "aliases": ["推举", "实力举"],
+  "summary": "站姿将杠铃从肩部推至头顶的垂直推动作。",
+  "primary_purpose": "primary_strength",
+  "recording_mode": "load_reps",
+  "instructions": [
+    "站姿与肩同宽，杠铃置于锁骨前上方，前臂垂直地面。",
+    "握杆略宽于肩，收紧核心与臀部。",
+    "垂直向上推举，头部稍后移让杠铃通过。",
+    "推至手臂伸直，杠铃位于头顶正上方。",
+    "控制下放回肩部起始位置。"
+  ],
+  "cues": [
+    "想象把身体从杠铃下压进地面。",
+    "推起时保持肋骨下沉，不塌腰。",
+    "杠铃路径尽量贴近面部向上。",
+    "全程核心绷紧。"
+  ],
+  "mistakes": [
+    "过度挺腰后仰代偿。",
+    "杠铃推离身体向前。",
+    "耸肩推起。",
+    "动作顶端锁定不充分。"
+  ],
+  "safety_notes": [
+    "肩部急性损伤时避免大重量推举。",
+    "重量较大时使用架上推举或请人保护。"
+  ],
+  "tags": {
+    "purpose": ["primary_strength"],
+    "movement_pattern": ["vertical_push"],
+    "equipment": ["barbell"],
+    "body_region": ["shoulder"],
+    "skill_level": ["basic"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["open_chain"]
+  },
+  "media": []
+}

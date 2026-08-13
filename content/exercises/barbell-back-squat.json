@@ -1,0 +1,42 @@
+{
+  "external_key": "barbell-back-squat",
+  "name_zh": "杠铃深蹲",
+  "name_en": "Barbell Back Squat",
+  "aliases": ["深蹲", "杠铃后蹲"],
+  "summary": "杠铃置于上背部，屈髋屈膝下蹲再站起的全身基础力量动作。",
+  "primary_purpose": "primary_strength",
+  "recording_mode": "load_reps",
+  "instructions": [
+    "将杠铃置于上背部斜方肌处，双手略宽于肩握杆，收紧肩胛。",
+    "双脚与肩同宽或略宽，脚尖略外展，站定后深吸气绷紧躯干。",
+    "同时屈髋屈膝向下，保持躯干角度稳定，膝盖方向与脚尖一致。",
+    "下蹲至大腿至少平行地面或控制允许的深度。",
+    "脚掌均匀压地，伸髋伸膝站起，呼气回到起始位置。"
+  ],
+  "cues": [
+    "下蹲前先屈髋，像向后坐椅子。",
+    "膝盖始终对准脚尖方向。",
+    "保持胸腔打开，不要弓背。",
+    "站起时想象把地面踩开。"
+  ],
+  "mistakes": [
+    "膝盖内扣。",
+    "脚跟离地导致重心前移。",
+    "下蹲时腰部过度前屈。",
+    "深度不足且只做半程。"
+  ],
+  "safety_notes": [
+    "使用保护架或保护杠，重量较大时请人保护。",
+    "腰部或膝关节有急性损伤时先咨询专业人士再练。"
+  ],
+  "tags": {
+    "purpose": ["primary_strength"],
+    "movement_pattern": ["squat"],
+    "equipment": ["barbell"],
+    "body_region": ["full_body"],
+    "skill_level": ["basic"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["closed_chain"]
+  },
+  "media": []
+}

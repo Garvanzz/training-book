@@ -1,0 +1,42 @@
+{
+  "external_key": "plank",
+  "name_zh": "平板支撑",
+  "name_en": "Plank",
+  "aliases": ["前支撑"],
+  "summary": "俯撑保持躯干成直线的核心等长收缩动作。",
+  "primary_purpose": "activation_control",
+  "recording_mode": "duration",
+  "instructions": [
+    "俯卧，前臂撑地，肘部位于肩部正下方。",
+    "双脚向后伸直，脚尖撑地。",
+    "收紧核心与臀部，将身体抬离地面。",
+    "保持头、躯干、腿成一条直线。",
+    "正常呼吸，坚持目标时间后控制下放。"
+  ],
+  "cues": [
+    "想象肚脐向脊柱方向收紧。",
+    "臀部夹紧，不要撅起或塌腰。",
+    "目光看向地面，保持颈部中立。",
+    "均匀呼吸，不要憋气。"
+  ],
+  "mistakes": [
+    "塌腰导致腰部压力。",
+    "臀部撅得过高。",
+    "耸肩。",
+    "憋气或屏息。"
+  ],
+  "safety_notes": [
+    "腰痛或腹部手术恢复期避免此动作。",
+    "质量优先：保持直线比坚持更久更重要。"
+  ],
+  "tags": {
+    "purpose": ["activation_control"],
+    "movement_pattern": ["breathing"],
+    "equipment": ["bodyweight"],
+    "body_region": ["trunk"],
+    "skill_level": ["beginner"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["closed_chain"]
+  },
+  "media": []
+}

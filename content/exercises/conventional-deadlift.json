@@ -1,0 +1,42 @@
+{
+  "external_key": "conventional-deadlift",
+  "name_zh": "传统硬拉",
+  "name_en": "Conventional Deadlift",
+  "aliases": ["硬拉", "杠铃硬拉"],
+  "summary": "从地面提起杠铃至站直的髋主导全身力量动作。",
+  "primary_purpose": "primary_strength",
+  "recording_mode": "load_reps",
+  "instructions": [
+    "双脚与髋同宽站立，杠铃位于脚掌中线上方。",
+    "屈髋俯身握杠，双手在腿外侧，肩胛位于杠铃正上方。",
+    "深吸气绷紧躯干，背部保持中立。",
+    "脚掌蹬地，杠铃贴腿上升，髋和肩同步伸展。",
+    "完全站直后锁定髋部，然后控制下放杠铃回地面。"
+  ],
+  "cues": [
+    "想象把杠铃从地面推离，而不是用手拉。",
+    "杠铃始终贴近小腿和大腿。",
+    "起拉前先收紧背阔肌。",
+    "站直时不要过度后仰。"
+  ],
+  "mistakes": [
+    "起拉时弓背。",
+    "杠铃离身体太远。",
+    "用腰猛拉导致腰部代偿。",
+    "下放时砸地失去控制。"
+  ],
+  "safety_notes": [
+    "下背部疼痛或急性腰伤期间不做此动作。",
+    "大重量前先充分热身并确认握法牢固。"
+  ],
+  "tags": {
+    "purpose": ["primary_strength"],
+    "movement_pattern": ["hinge"],
+    "equipment": ["barbell"],
+    "body_region": ["full_body"],
+    "skill_level": ["basic"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["closed_chain"]
+  },
+  "media": []
+}

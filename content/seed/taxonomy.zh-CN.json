@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "terms": [
+    {"dimension": "purpose", "code": "readiness", "name_zh": "状态检查", "sort_order": 10},
+    {"dimension": "purpose", "code": "general_warmup", "name_zh": "一般热身", "sort_order": 20},
+    {"dimension": "purpose", "code": "mobility", "name_zh": "活动度与动态拉伸", "sort_order": 30},
+    {"dimension": "purpose", "code": "activation_control", "name_zh": "激活与控制", "sort_order": 40},
+    {"dimension": "purpose", "code": "movement_prep", "name_zh": "专项动作准备", "sort_order": 50},
+    {"dimension": "purpose", "code": "power_skill", "name_zh": "爆发力与技术", "sort_order": 60},
+    {"dimension": "purpose", "code": "primary_strength", "name_zh": "主项力量", "sort_order": 70},
+    {"dimension": "purpose", "code": "accessory", "name_zh": "辅助力量与肌肥大", "sort_order": 80},
+    {"dimension": "purpose", "code": "local_endurance", "name_zh": "局部肌耐力", "sort_order": 90},
+    {"dimension": "purpose", "code": "conditioning", "name_zh": "能量系统与有氧", "sort_order": 100},
+    {"dimension": "purpose", "code": "cooldown_recovery", "name_zh": "整理与恢复", "sort_order": 110},
+
+    {"dimension": "movement_pattern", "code": "squat", "name_zh": "深蹲", "sort_order": 10},
+    {"dimension": "movement_pattern", "code": "hinge", "name_zh": "髋铰链", "sort_order": 20},
+    {"dimension": "movement_pattern", "code": "lunge", "name_zh": "弓步与单腿支撑", "sort_order": 30},
+    {"dimension": "movement_pattern", "code": "horizontal_push", "name_zh": "水平推", "sort_order": 40},
+    {"dimension": "movement_pattern", "code": "horizontal_pull", "name_zh": "水平拉", "sort_order": 50},
+    {"dimension": "movement_pattern", "code": "vertical_push", "name_zh": "垂直推", "sort_order": 60},
+    {"dimension": "movement_pattern", "code": "vertical_pull", "name_zh": "垂直拉", "sort_order": 70},
+    {"dimension": "movement_pattern", "code": "carry", "name_zh": "负重携行", "sort_order": 80},
+    {"dimension": "movement_pattern", "code": "rotation", "name_zh": "旋转", "sort_order": 90},
+    {"dimension": "movement_pattern", "code": "anti_rotation", "name_zh": "抗旋转", "sort_order": 100},
+    {"dimension": "movement_pattern", "code": "locomotion", "name_zh": "步态、跑跳与变向", "sort_order": 110},
+    {"dimension": "movement_pattern", "code": "breathing", "name_zh": "呼吸与躯干压力", "sort_order": 120},
+
+    {"dimension": "body_region", "code": "full_body", "name_zh": "全身", "sort_order": 10},
+    {"dimension": "body_region", "code": "trunk", "name_zh": "躯干", "sort_order": 20},
+    {"dimension": "body_region", "code": "shoulder_girdle", "name_zh": "肩胛带", "sort_order": 30},
+    {"dimension": "body_region", "code": "shoulder", "name_zh": "肩部", "sort_order": 40},
+    {"dimension": "body_region", "code": "hip", "name_zh": "髋部", "sort_order": 50},
+    {"dimension": "body_region", "code": "knee", "name_zh": "膝部", "sort_order": 60},
+    {"dimension": "body_region", "code": "ankle_foot", "name_zh": "踝足", "sort_order": 70},
+
+    {"dimension": "equipment", "code": "bodyweight", "name_zh": "徒手", "sort_order": 10},
+    {"dimension": "equipment", "code": "barbell", "name_zh": "杠铃", "sort_order": 20},
+    {"dimension": "equipment", "code": "dumbbell", "name_zh": "哑铃", "sort_order": 30},
+    {"dimension": "equipment", "code": "kettlebell", "name_zh": "壶铃", "sort_order": 40},
+    {"dimension": "equipment", "code": "cable", "name_zh": "绳索", "sort_order": 50},
+    {"dimension": "equipment", "code": "band", "name_zh": "弹力带", "sort_order": 60},
+    {"dimension": "equipment", "code": "machine", "name_zh": "固定器械", "sort_order": 70},
+    {"dimension": "equipment", "code": "cardio_machine", "name_zh": "有氧器械", "sort_order": 80},
+
+    {"dimension": "skill_level", "code": "beginner", "name_zh": "入门", "sort_order": 10},
+    {"dimension": "skill_level", "code": "basic", "name_zh": "基础", "sort_order": 20},
+    {"dimension": "skill_level", "code": "intermediate", "name_zh": "中级", "sort_order": 30},
+    {"dimension": "skill_level", "code": "advanced", "name_zh": "高级", "sort_order": 40},
+
+    {"dimension": "plane", "code": "sagittal", "name_zh": "矢状面", "sort_order": 10},
+    {"dimension": "plane", "code": "frontal", "name_zh": "额状面", "sort_order": 20},
+    {"dimension": "plane", "code": "transverse", "name_zh": "水平面", "sort_order": 30},
+    {"dimension": "plane", "code": "multi_planar", "name_zh": "多平面", "sort_order": 40},
+
+    {"dimension": "kinetic_chain", "code": "open_chain", "name_zh": "开放链", "sort_order": 10},
+    {"dimension": "kinetic_chain", "code": "closed_chain", "name_zh": "闭合链", "sort_order": 20},
+    {"dimension": "kinetic_chain", "code": "mixed_chain", "name_zh": "混合链", "sort_order": 30}
+  ]
+}

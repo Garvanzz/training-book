@@ -1,0 +1,42 @@
+{
+  "external_key": "barbell-bench-press",
+  "name_zh": "杠铃卧推",
+  "name_en": "Barbell Bench Press",
+  "aliases": ["卧推", "平板卧推"],
+  "summary": "仰卧将杠铃从胸部推起的水平推基础力量动作。",
+  "primary_purpose": "primary_strength",
+  "recording_mode": "load_reps",
+  "instructions": [
+    "仰卧于平板凳，双眼位于杠铃正下方，双脚踩实地面。",
+    "双手略宽于肩握杆，肩胛后收下压贴住凳面。",
+    "将杠铃从架上取下，置于胸部上方，手臂伸直。",
+    "控制杠铃下降至胸部或胸口上方，肘部约呈 45 度夹角。",
+    "脚掌蹬地，将杠铃推回起始位置。"
+  ],
+  "cues": [
+    "推起时想象把身体推离杠铃。",
+    "肩胛全程贴凳，不要耸肩。",
+    "杠铃下降路径略向胸部下方。",
+    "手腕保持中立，杠铃压在掌根。"
+  ],
+  "mistakes": [
+    "肩部前耸脱离凳面。",
+    "下降时肘部过度外展呈 90 度。",
+    "臀部离凳借力。",
+    "手腕向后过度弯折。"
+  ],
+  "safety_notes": [
+    "大重量必须使用保护杠或请人保护。",
+    "肩部有急性损伤时先降低重量并确认动作模式。"
+  ],
+  "tags": {
+    "purpose": ["primary_strength"],
+    "movement_pattern": ["horizontal_push"],
+    "equipment": ["barbell"],
+    "body_region": ["shoulder_girdle"],
+    "skill_level": ["basic"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["open_chain"]
+  },
+  "media": []
+}

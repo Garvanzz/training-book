@@ -1,0 +1,42 @@
+{
+  "external_key": "bulgarian-split-squat",
+  "name_zh": "保加利亚分腿蹲",
+  "name_en": "Bulgarian Split Squat",
+  "aliases": ["保加利亚蹲", "单腿蹲"],
+  "summary": "后脚垫高的单腿下蹲动作，强化单侧下肢力量与稳定。",
+  "primary_purpose": "accessory",
+  "recording_mode": "load_reps",
+  "instructions": [
+    "背对凳子站立，将一只脚的脚背搭在凳面上。",
+    "前脚站稳，身体重心位于前脚掌。",
+    "屈前腿膝盖缓慢下蹲，躯干保持正直。",
+    "下蹲至前腿大腿接近平行地面或可控深度。",
+    "前脚蹬地站起，保持髋部水平不倾斜。"
+  ],
+  "cues": [
+    "重心放在前脚，后脚只作支撑。",
+    "前膝方向与脚尖一致。",
+    "髋部保持水平，不要歪向一侧。",
+    "站起时想象前脚踩穿地面。"
+  ],
+  "mistakes": [
+    "身体前倾过度。",
+    "前膝内扣。",
+    "髋部向一侧偏移。",
+    "下蹲深度不足。"
+  ],
+  "safety_notes": [
+    "平衡不足时先扶墙或扶手。",
+    "膝关节急性疼痛时减少深度或改徒手。"
+  ],
+  "tags": {
+    "purpose": ["accessory"],
+    "movement_pattern": ["lunge"],
+    "equipment": ["dumbbell"],
+    "body_region": ["knee"],
+    "skill_level": ["basic"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["closed_chain"]
+  },
+  "media": []
+}

@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://training-book.local/schemas/exercise-version.schema.json",
+  "title": "Exercise Version",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "external_key",
+    "name_zh",
+    "summary",
+    "primary_purpose",
+    "recording_mode",
+    "instructions",
+    "cues",
+    "mistakes",
+    "safety_notes",
+    "tags",
+    "media"
+  ],
+  "properties": {
+    "external_key": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"
+    },
+    "name_zh": { "type": "string", "minLength": 2, "maxLength": 80 },
+    "name_en": { "type": "string", "maxLength": 120 },
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 80 },
+      "uniqueItems": true,
+      "maxItems": 20
+    },
+    "summary": { "type": "string", "minLength": 10, "maxLength": 240 },
+    "primary_purpose": {
+      "enum": [
+        "readiness", "general_warmup", "mobility", "activation_control",
+        "movement_prep", "power_skill", "primary_strength", "accessory",
+        "local_endurance", "conditioning", "cooldown_recovery"
+      ]
+    },
+    "recording_mode": {
+      "enum": ["load_reps", "duration", "distance", "load_duration", "assisted_bodyweight", "mixed"]
+    },
+    "instructions": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 12,
+      "items": { "type": "string", "minLength": 4, "maxLength": 300 }
+    },
+    "cues": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 6,
+      "items": { "type": "string", "minLength": 4, "maxLength": 120 }
+    },
+    "mistakes": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 5,
+      "items": { "type": "string", "minLength": 4, "maxLength": 160 }
+    },
+    "safety_notes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 6,
+      "items": { "type": "string", "minLength": 4, "maxLength": 200 }
+    },
+    "tags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["movement_pattern", "body_region", "equipment", "skill_level"],
+      "properties": {
+        "movement_pattern": { "$ref": "#/$defs/tag_array" },
+        "body_region": { "$ref": "#/$defs/tag_array" },
+        "equipment": { "$ref": "#/$defs/tag_array" },
+        "goal": { "$ref": "#/$defs/tag_array" },
+        "plane": { "$ref": "#/$defs/tag_array" },
+        "kinetic_chain": { "$ref": "#/$defs/tag_array" },
+        "skill_level": { "$ref": "#/$defs/tag_array" }
+      }
+    },
+    "media": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "object_key", "sha256", "alt_text_zh", "license_type", "rights_holder"],
+        "properties": {
+          "type": { "enum": ["video", "image", "cover", "keyframe"] },
+          "object_key": { "type": "string", "minLength": 8, "maxLength": 512 },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "alt_text_zh": { "type": "string", "minLength": 8, "maxLength": 240 },
+          "license_type": { "type": "string", "minLength": 2, "maxLength": 60 },
+          "rights_holder": { "type": "string", "minLength": 2, "maxLength": 120 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "tag_array": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 12,
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9_.-]{1,63}$" },
+      "uniqueItems": true
+    }
+  }
+}

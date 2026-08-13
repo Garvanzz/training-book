@@ -1,0 +1,42 @@
+{
+  "external_key": "farmers-carry",
+  "name_zh": "农夫行走",
+  "name_en": "Farmer's Carry",
+  "aliases": ["负重行走"],
+  "summary": "双手持重物保持躯干稳定行走的功能性携行动作。",
+  "primary_purpose": "conditioning",
+  "recording_mode": "load_duration",
+  "instructions": [
+    "双手各持一只哑铃或壶铃，站直，肩胛下沉。",
+    "收紧核心，保持躯干高度稳定。",
+    "小步匀速向前行走，步伐自然。",
+    "全程保持两侧肩膀等高，不左右摇晃。",
+    "到达目标距离或时间后，控制下放重物。"
+  ],
+  "cues": [
+    "想象头顶有绳子向上拉。",
+    "核心全程绷紧，不塌腰。",
+    "步伐短而稳，不要拖地。",
+    "肩膀放松下沉，不耸肩。"
+  ],
+  "mistakes": [
+    "身体向一侧倾斜。",
+    "腰部前屈代偿。",
+    "脚步过快失去控制。",
+    "重物离身体太远。"
+  ],
+  "safety_notes": [
+    "握力不足时及时放下，不要硬撑。",
+    "地面湿滑或视线受阻时降低速度。"
+  ],
+  "tags": {
+    "purpose": ["conditioning"],
+    "movement_pattern": ["carry"],
+    "equipment": ["dumbbell"],
+    "body_region": ["full_body"],
+    "skill_level": ["basic"],
+    "plane": ["sagittal"],
+    "kinetic_chain": ["closed_chain"]
+  },
+  "media": []
+}
