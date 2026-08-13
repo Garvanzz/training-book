@@ -5,7 +5,7 @@ from datetime import UTC, datetime, timedelta
 from typing import Annotated
 from uuid import uuid4
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy import text
 
 from app.api.dependencies import Principal, require_principal
@@ -18,6 +18,8 @@ from app.api.schemas import (
     SessionResponse,
 )
 from app.core.config import Settings, get_settings
+from app.core.ratelimit import check_and_record
+from app.core.ratelimit import clear as clear_rate_limit
 from app.core.security import (
     hash_password,
     issue_access_token,
@@ -31,7 +33,21 @@ router = APIRouter(prefix="/v1/auth", tags=["auth"])
 
 
 def _invalid_credentials() -> HTTPException:
-    return HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+    return HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials"
+    )
+
+
+def _too_many_attempts() -> HTTPException:
+    return HTTPException(
+        status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+        detail="Too many failed attempts. Try again in 15 minutes.",
+        headers={"Retry-After": "900"},
+    )
+
+
+def _client_ip(request: Request) -> str:
+    return request.client.host if request.client else "unknown"
 
 
 async def _issue_device_session(
@@ -95,8 +111,15 @@ async def _issue_device_session(
 
 
 @router.post("/login", response_model=SessionResponse)
-async def login(request: LoginRequest) -> SessionResponse:
+async def login(request: LoginRequest, http_request: Request) -> SessionResponse:
     settings = get_settings()
+
+    # Failed logins accumulate per email and per client IP; a successful
+    # login clears both, so only genuine failures consume the budget.
+    email_key = f"login:email:{request.email.strip().lower()}"
+    ip_key = f"login:ip:{_client_ip(http_request)}"
+    if not check_and_record(email_key) or not check_and_record(ip_key):
+        raise _too_many_attempts()
 
     async with system_transaction() as session:
         result = await session.execute(
@@ -110,8 +133,13 @@ async def login(request: LoginRequest) -> SessionResponse:
             {"email": request.email},
         )
         user = result.mappings().one_or_none()
-        if user is None or not verify_password(request.password, str(user["password_hash"])):
+        if user is None or not verify_password(
+            request.password, str(user["password_hash"])
+        ):
             raise _invalid_credentials()
+
+    clear_rate_limit(email_key)
+    clear_rate_limit(ip_key)
 
     user_id = user["id"]
     async with user_transaction(user_id) as session:
@@ -202,8 +230,10 @@ async def registration_status() -> RegistrationStatusResponse:
     return RegistrationStatusResponse(enabled=get_settings().registration_enabled)
 
 
-@router.post("/register", response_model=SessionResponse, status_code=status.HTTP_201_CREATED)
-async def register(request: RegisterRequest) -> SessionResponse:
+@router.post(
+    "/register", response_model=SessionResponse, status_code=status.HTTP_201_CREATED
+)
+async def register(request: RegisterRequest, http_request: Request) -> SessionResponse:
     """Create one regular account and sign the new device in immediately.
 
     The switch is off by default; the CLI remains the only way to create the
@@ -216,6 +246,10 @@ async def register(request: RegisterRequest) -> SessionResponse:
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Registration is not enabled on this server.",
         )
+
+    ip_key = f"register:ip:{_client_ip(http_request)}"
+    if not check_and_record(ip_key):
+        raise _too_many_attempts()
 
     user_id = uuid4()
     async with system_transaction() as session:
@@ -242,7 +276,11 @@ async def register(request: RegisterRequest) -> SessionResponse:
                 VALUES (:id, :email, :password_hash, true, false)
                 """
             ),
-            {"id": user_id, "email": request.email, "password_hash": hash_password(request.password)},
+            {
+                "id": user_id,
+                "email": request.email,
+                "password_hash": hash_password(request.password),
+            },
         )
         await session.execute(
             text(
@@ -261,10 +299,16 @@ async def register(request: RegisterRequest) -> SessionResponse:
                 "id": uuid4(),
                 "actor_user_id": user_id,
                 "entity_id": user_id,
-                "after_json": json.dumps({"email": request.email, "display_name": request.display_name.strip()}),
+                "after_json": json.dumps(
+                    {
+                        "email": request.email,
+                        "display_name": request.display_name.strip(),
+                    }
+                ),
             },
         )
 
+    clear_rate_limit(ip_key)
     async with user_transaction(user_id) as session:
         return await _issue_device_session(
             session,
@@ -277,22 +321,33 @@ async def register(request: RegisterRequest) -> SessionResponse:
 
 
 @router.get("/me", response_model=AuthMeResponse)
-async def auth_me(principal: Annotated[Principal, Depends(require_principal)]) -> AuthMeResponse:
+async def auth_me(
+    principal: Annotated[Principal, Depends(require_principal)],
+) -> AuthMeResponse:
     """Return the signed-in account; the client uses this to show owner UI."""
 
     async with system_transaction() as session:
         row = (
-            await session.execute(
-                text(
-                    """
+            (
+                await session.execute(
+                    text(
+                        """
                     SELECT id, email, is_owner
                     FROM users
                     WHERE id = :user_id AND is_active = true AND deleted_at IS NULL
                     """
-                ),
-                {"user_id": principal.user_id},
+                    ),
+                    {"user_id": principal.user_id},
+                )
             )
-        ).mappings().one_or_none()
+            .mappings()
+            .one_or_none()
+        )
     if row is None:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Account is no longer active")
-    return AuthMeResponse(user_id=row["id"], email=str(row["email"]), is_owner=bool(row["is_owner"]))
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Account is no longer active",
+        )
+    return AuthMeResponse(
+        user_id=row["id"], email=str(row["email"]), is_owner=bool(row["is_owner"])
+    )

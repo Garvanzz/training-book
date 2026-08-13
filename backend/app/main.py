@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
+from app.api.routes.account import router as account_router
 from app.api.routes.auth import router as auth_router
 from app.api.routes.library import router as library_router
 from app.api.routes.plans import router as plans_router
@@ -18,6 +19,7 @@ async def lifespan(_: FastAPI):
     yield
     await dispose_database()
 
+
 app = FastAPI(
     title="Training Book API",
     version="0.1.0",
@@ -25,6 +27,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 app.include_router(auth_router)
+app.include_router(account_router)
 app.include_router(library_router)
 app.include_router(plans_router)
 app.include_router(progression_router)

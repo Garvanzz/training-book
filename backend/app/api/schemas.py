@@ -54,6 +54,18 @@ class AuthMeResponse(BaseModel):
     is_owner: bool
 
 
+class AccountExportResponse(BaseModel):
+    """Full personal-data export: one flat document per user-owned table.
+
+    RLS scopes every table to the caller, so the payload is exactly the
+    data the account owns on this server.
+    """
+
+    exported_at: datetime
+    account: dict[str, object]
+    documents: dict[str, list[dict[str, object]]]
+
+
 class SyncOperation(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
