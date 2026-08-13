@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/api/api_client.dart';
 import '../../../core/data/training_repository.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/appear_in.dart';
+import '../../../core/widgets/hover_lift.dart';
 import '../../library/presentation/exercise_detail_page.dart';
 import '../../workout/presentation/workout_session_page.dart';
 import 'plan_editor_page.dart';
@@ -159,46 +161,55 @@ class _PlanCard extends StatelessWidget {
     final stageCount = (plan['block_count'] as num?)?.toInt() ??
         _countStages(plan);
     final actionCount = (plan['exercise_slot_count'] as num?)?.toInt() ?? _countActions(plan);
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onOpen,
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            children: [
-              Container(
-                width: 42,
-                height: 42,
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceInteractive,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Icon(Icons.fitness_center, color: AppColors.accent),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text((plan['name'] as String?) ?? '未命名训练',
-                        style: Theme.of(context).textTheme.titleLarge),
-                    const SizedBox(height: 5),
-                    Text('$stageCount 个阶段 · $actionCount 个动作',
-                        style: const TextStyle(color: AppColors.muted)),
-                  ],
-                ),
-              ),
-              const Icon(Icons.arrow_forward),
-              PopupMenuButton<String>(
-                onSelected: (value) {
-                  if (value == 'delete') onDelete();
-                },
-                itemBuilder: (_) => const [
-                  PopupMenuItem(value: 'delete', child: Text('删除计划')),
+    return AppearIn(
+      child: HoverLift(
+        builder: (context, hovered) => Card(
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: hoverBorder(hovered)),
+          ),
+          child: InkWell(
+            onTap: onOpen,
+            borderRadius: BorderRadius.circular(16),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Row(
+                children: [
+                  Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceInteractive,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(Icons.fitness_center, color: AppColors.accent),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text((plan['name'] as String?) ?? '未命名训练',
+                            style: Theme.of(context).textTheme.titleLarge),
+                        const SizedBox(height: 5),
+                        Text('$stageCount 个阶段 · $actionCount 个动作',
+                            style: const TextStyle(color: AppColors.muted)),
+                      ],
+                    ),
+                  ),
+                  const Icon(Icons.arrow_forward),
+                  PopupMenuButton<String>(
+                    onSelected: (value) {
+                      if (value == 'delete') onDelete();
+                    },
+                    itemBuilder: (_) => const [
+                      PopupMenuItem(value: 'delete', child: Text('删除计划')),
+                    ],
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
         ),
       ),

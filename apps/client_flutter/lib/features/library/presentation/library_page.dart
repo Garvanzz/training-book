@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../core/api/api_client.dart';
 import '../../../core/data/training_repository.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../../core/widgets/appear_in.dart';
+import '../../../core/widgets/hover_lift.dart';
 import 'exercise_detail_page.dart';
 import 'quick_exercise_editor_page.dart';
 
@@ -336,67 +338,76 @@ class _ExerciseCard extends StatelessWidget {
     final purposes = (exercise['purposes'] as List<dynamic>? ?? const [])
         .cast<String>();
     final canRevise = onRevise != null;
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onOpen,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                color: AppColors.surfaceInteractive,
-                child: const Center(
-                  child: Icon(
-                    Icons.fitness_center_outlined,
-                    size: 42,
-                    color: AppColors.accent,
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          name?.isNotEmpty == true ? name! : '未命名动作',
-                          style: const TextStyle(fontWeight: FontWeight.w800),
-                        ),
-                        if (purposes.isNotEmpty ||
-                            summary?.isNotEmpty == true) ...[
-                          const SizedBox(height: 4),
-                          Text(
-                            purposes.isEmpty
-                                ? summary!
-                                : _purposeLabel(purposes.first),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: AppColors.muted,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ],
+    return AppearIn(
+      child: HoverLift(
+        builder: (context, hovered) => Card(
+          clipBehavior: Clip.antiAlias,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: hoverBorder(hovered)),
+          ),
+          child: InkWell(
+            onTap: onOpen,
+            borderRadius: BorderRadius.circular(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: double.infinity,
+                    color: AppColors.surfaceInteractive,
+                    child: const Center(
+                      child: Icon(
+                        Icons.fitness_center_outlined,
+                        size: 42,
+                        color: AppColors.accent,
+                      ),
                     ),
                   ),
-                  PopupMenuButton<String>(
-                    enabled: canRevise,
-                    onSelected: (_) => onRevise?.call(),
-                    itemBuilder: (_) => const [
-                      PopupMenuItem(value: 'revise', child: Text('创建修订')),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 12, 8, 12),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name?.isNotEmpty == true ? name! : '未命名动作',
+                              style: const TextStyle(fontWeight: FontWeight.w800),
+                            ),
+                            if (purposes.isNotEmpty ||
+                                summary?.isNotEmpty == true) ...[
+                              const SizedBox(height: 4),
+                              Text(
+                                purposes.isEmpty
+                                    ? summary!
+                                    : _purposeLabel(purposes.first),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  color: AppColors.muted,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
+                      ),
+                      PopupMenuButton<String>(
+                        enabled: canRevise,
+                        onSelected: (_) => onRevise?.call(),
+                        itemBuilder: (_) => const [
+                          PopupMenuItem(value: 'revise', child: Text('创建修订')),
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
