@@ -4,18 +4,18 @@ product: Training Book
 platforms: [windows, ios]
 theme: dark
 colors:
-  canvas: '#0B0E12'
-  surface: '#131820'
-  surfaceRaised: '#1A212B'
-  surfaceInteractive: '#222C38'
-  border: '#2D3947'
-  text: '#F2F5F7'
-  muted: '#9CA9B8'
-  accent: '#B8E85C'
-  accentInk: '#172000'
-  info: '#78B7FF'
+  canvas: '#0F1722'
+  surface: '#16202D'
+  surfaceRaised: '#1E2B3B'
+  surfaceInteractive: '#26384E'
+  border: '#2E435C'
+  text: '#F2F7FB'
+  muted: '#93A8BD'
+  accent: '#4AD4C0'
+  accentInk: '#052422'
+  info: '#6FB6FF'
   warning: '#F5C56B'
-  danger: '#FF8383'
+  danger: '#FF8B84'
 spacing: [4, 8, 12, 16, 24, 32, 48]
 radii:
   small: 10

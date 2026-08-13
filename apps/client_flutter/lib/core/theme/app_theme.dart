@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 abstract final class AppColors {
-  static const canvas = Color(0xFF0B0E12);
-  static const surface = Color(0xFF131820);
-  static const surfaceRaised = Color(0xFF1A212B);
-  static const surfaceInteractive = Color(0xFF222C38);
-  static const border = Color(0xFF2D3947);
-  static const text = Color(0xFFF2F5F7);
-  static const muted = Color(0xFF9CA9B8);
-  static const accent = Color(0xFFB8E85C);
-  static const accentInk = Color(0xFF172000);
-  static const info = Color(0xFF78B7FF);
+  static const canvas = Color(0xFF0F1722);
+  static const surface = Color(0xFF16202D);
+  static const surfaceRaised = Color(0xFF1E2B3B);
+  static const surfaceInteractive = Color(0xFF26384E);
+  static const border = Color(0xFF2E435C);
+  static const text = Color(0xFFF2F7FB);
+  static const muted = Color(0xFF93A8BD);
+  static const accent = Color(0xFF4AD4C0);
+  static const accentInk = Color(0xFF052422);
+  static const info = Color(0xFF6FB6FF);
   static const warning = Color(0xFFF5C56B);
-  static const danger = Color(0xFFFF8383);
+  static const danger = Color(0xFFFF8B84);
 }
 
 abstract final class AppTheme {
