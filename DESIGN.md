@@ -18,9 +18,10 @@ colors:
   danger: '#FF8B84'
 spacing: [4, 8, 12, 16, 24, 32, 48]
 radii:
-  small: 10
+  small: 12
   medium: 16
-  large: 24
+  large: 20
+  xlarge: 24
 ---
 
 # Training Book Design System

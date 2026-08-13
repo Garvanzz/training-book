@@ -345,6 +345,10 @@ class _WorkoutSessionPageState extends State<WorkoutSessionPage> {
                   ],
                   const SizedBox(height: 18),
                   Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      side: const BorderSide(color: AppColors.border),
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(18),
                       child: Column(
