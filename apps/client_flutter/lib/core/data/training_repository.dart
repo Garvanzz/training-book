@@ -36,8 +36,6 @@ class TrainingRepository extends ChangeNotifier {
   static const _rememberedPasswordKey = 'remembered_login_password';
   static const _deviceIdKey = 'device_id';
   static const _accountScopeKey = 'active_account_scope';
-  static const _queueKey = 'sync_queue_v1';
-  static const _syncCursorKey = 'sync_cursor_v1';
   static const _offlineWorkoutKey = 'offline_workout_v1';
   static const _rememberedAccountScopeKey = 'remembered_account_scope';
 
@@ -1096,55 +1094,15 @@ class TrainingRepository extends ChangeNotifier {
     }
   }
 
-  /// Retained only for source-compatible diagnostics while old installations
-  /// migrate.  All app code enters through the SQLite-backed [flushQueue].
-  // ignore: unused_element
-  Future<void> _legacyFlushQueue() async {
-    final queue = _readQueue();
-    if (queue.isEmpty || isSyncing) {
-      return;
-    }
-    isSyncing = true;
-    notifyListeners();
-    try {
-      final response = await _authorized(
-        'POST',
-        '/v1/sync/push',
-        body: {'device_id': deviceId, 'operations': queue},
-      );
-      final json = jsonDecode(response.body) as Map<String, dynamic>;
-      final results = (json['results'] as List<dynamic>)
-          .cast<Map<String, dynamic>>();
-      final removable = <String>{
-        for (final result in results)
-          if (result['result'] == 'accepted' || result['result'] == 'rejected')
-            result['operation_id'] as String,
-      };
-      final remaining = queue
-          .where((operation) => !removable.contains(operation['operation_id']))
-          .toList();
-      await _writeQueue(remaining);
-      await _preferences.setInt(_syncCursorKey, json['next_cursor'] as int);
-      isOnline = true;
-      lastSyncMessage = remaining.isEmpty
-          ? '离线记录已同步'
-          : '有 ${remaining.length} 条记录需要人工处理';
-    } catch (_) {
-      isOnline = false;
-      lastSyncMessage = '同步暂不可用，记录仍安全保存在本机';
-    } finally {
-      isSyncing = false;
-      pendingOperationCount = _readQueue().length;
-      notifyListeners();
-    }
-  }
-
   Future<void> _enqueueSetLog({
     required String sessionId,
     required String itemId,
     required int setNumber,
     required Map<String, dynamic> body,
   }) async {
+    // An offline re-save of the same set must not stack duplicate create
+    // operations: the server would reject all but the first as a conflict.
+    await _database.coalescePendingSetLog(_accountScope, itemId, setNumber);
     await _database.enqueueOperation(_accountScope, {
       'operation_id': _newUuid(),
       'entity_type': 'set_log',
@@ -1239,21 +1197,6 @@ class TrainingRepository extends ChangeNotifier {
       key: _refreshTokenKey,
       value: session['refresh_token'] as String,
     );
-  }
-
-  List<Map<String, dynamic>> _readQueue() => _readJsonList(_queueKey);
-
-  List<Map<String, dynamic>> _readJsonList(String key) {
-    final raw = _preferences.getString(key);
-    if (raw == null) return [];
-    return (jsonDecode(raw) as List<dynamic>)
-        .map((entry) => Map<String, dynamic>.from(entry as Map))
-        .toList();
-  }
-
-  Future<void> _writeQueue(List<Map<String, dynamic>> queue) async {
-    await _preferences.setString(_queueKey, jsonEncode(queue));
-    pendingOperationCount = queue.length;
   }
 
   String _accountScopeForEmail(String email) => email.trim().toLowerCase();

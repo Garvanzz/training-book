@@ -23,13 +23,18 @@ class LocalDatabase {
 
   final Database _database;
 
-  static Future<LocalDatabase> open(SharedPreferences preferences) async {
+  static Future<LocalDatabase> open(
+    SharedPreferences preferences, {
+    /// Test seam: lets unit tests point the store at a temp directory instead
+    /// of the platform application-support directory.
+    Directory? overrideDirectory,
+  }) async {
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
     }
 
-    final supportDirectory = await getApplicationSupportDirectory();
+    final supportDirectory = overrideDirectory ?? await getApplicationSupportDirectory();
     final dataDirectory = Directory(path.join(supportDirectory.path, 'training_book'));
     if (!await dataDirectory.exists()) {
       await dataDirectory.create(recursive: true);
@@ -44,6 +49,8 @@ class LocalDatabase {
     await local._migrateSharedPreferences(preferences);
     return local;
   }
+
+  Future<void> close() => _database.close();
 
   static Future<void> _create(Database db, int version) async {
     await db.execute('''
@@ -431,6 +438,35 @@ class LocalDatabase {
         whereArgs: [accountScope, operationId],
       );
 
+  /// Drops pending `set_log` create operations for one (item, set number) so
+  /// re-saving the same set offline coalesces into the latest value.
+  ///
+  /// The server rejects a duplicate create with `set_number_already_recorded`,
+  /// which would surface as a fake `needs_attention` entry the user can only
+  /// discard.  Known ceiling: a set already accepted by the server and then
+  /// re-saved offline still conflicts, until the client tracks server
+  /// revisions and switches to `update` operations.  ponytail: O(n) scan of
+  /// the pending queue; fine while queues stay small, switch to an indexed
+  /// payload column when they grow.
+  Future<void> coalescePendingSetLog(
+    String accountScope,
+    String workoutItemId,
+    int setNumber,
+  ) async {
+    final pending = await pendingOperations(accountScope);
+    final staleIds = <String>[
+      for (final operation in pending)
+        if (operation['entity_type'] == 'set_log' &&
+            operation['operation_type'] == 'create' &&
+            _payloadField(operation, 'workout_item_id') == workoutItemId &&
+            _payloadField(operation, 'set_number') == setNumber)
+          operation['operation_id'].toString(),
+    ];
+    for (final operationId in staleIds) {
+      await deleteOperation(accountScope, operationId);
+    }
+  }
+
   Future<String?> getMetadata(String accountScope, String key) async {
     final rows = await _database.query(
       'sync_metadata',
@@ -548,6 +584,9 @@ class LocalDatabase {
         'base_revision': row['base_revision'],
         'payload': _decodeRequired(row['payload_json'] as String),
       };
+
+  Object? _payloadField(Map<String, dynamic> operation, String key) =>
+      (operation['payload'] as Map?)?[key];
 
   List<Map<String, dynamic>> _decodeList(String? raw) {
     if (raw == null) return const [];

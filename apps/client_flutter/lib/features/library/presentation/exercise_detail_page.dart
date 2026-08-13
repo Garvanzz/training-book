@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:media_kit/media_kit.dart';
 import 'package:media_kit_video/media_kit_video.dart';
 
-import '../../../core/api/api_client.dart';
+import '../../../core/api/api_client.dart' show apiBaseUrl;
 import '../../../core/data/training_repository.dart';
 import '../../../core/theme/app_theme.dart';
 
@@ -94,7 +94,7 @@ class _MediaGallery extends StatelessWidget {
   final TrainingRepository repository;
   String _key(Map<String, dynamic> item) =>
       (item['preview_object_key'] ?? item['object_key'])?.toString() ?? '';
-  String _url(Map<String, dynamic> item) => '${ApiClient.baseUrl}/media/${_key(item)}';
+  String _url(Map<String, dynamic> item) => '$apiBaseUrl/media/${_key(item)}';
 
   @override
   Widget build(BuildContext context) {
