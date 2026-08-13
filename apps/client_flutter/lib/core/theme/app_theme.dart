@@ -15,6 +15,40 @@ abstract final class AppColors {
   static const danger = Color(0xFFFF8B84);
 }
 
+/// Motion vocabulary: short, ease-out, state-change only.
+abstract final class AppMotion {
+  static const fast = Duration(milliseconds: 150);
+  static const normal = Duration(milliseconds: 220);
+  static const slow = Duration(milliseconds: 280);
+  static const easeOut = Curves.easeOutCubic;
+}
+
+/// Fade + slight upward slide for every MaterialPageRoute.
+class _FadeSlideTransitionsBuilder extends PageTransitionsBuilder {
+  const _FadeSlideTransitionsBuilder();
+
+  @override
+  Widget buildTransitions<T>(
+    PageRoute<T> route,
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) {
+    final curved = CurvedAnimation(parent: animation, curve: AppMotion.easeOut);
+    return FadeTransition(
+      opacity: curved,
+      child: SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0, 0.02),
+          end: Offset.zero,
+        ).animate(curved),
+        child: child,
+      ),
+    );
+  }
+}
+
 abstract final class AppTheme {
   static ThemeData dark() {
     final scheme = ColorScheme.fromSeed(
@@ -25,6 +59,11 @@ abstract final class AppTheme {
 
     return ThemeData(
       useMaterial3: true,
+      pageTransitionsTheme: const PageTransitionsTheme(builders: {
+        TargetPlatform.windows: _FadeSlideTransitionsBuilder(),
+        TargetPlatform.iOS: _FadeSlideTransitionsBuilder(),
+        TargetPlatform.macOS: _FadeSlideTransitionsBuilder(),
+      }),
       brightness: Brightness.dark,
       colorScheme: scheme.copyWith(
         primary: AppColors.accent,
