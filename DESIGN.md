@@ -42,6 +42,13 @@ Desktop uses a persistent 216px navigation rail, a 32px page gutter and a maximu
 
 The canvas is near-black graphite, not pure black. Surfaces are separated with 1px low-contrast borders before shadows. Lime is reserved for the next useful action, completion and positive state; it must not become a large background color. Blue is informational, amber is attention, and red is destructive or unsafe.
 
+## Motion
+
+Interaction feedback only: 150-280ms, ease-out, no ambient looping animation.
+Page changes fade with a subtle rise; desktop cards lift 2px with a tinted
+border on hover; primary buttons scale to 0.97 while pressed; completion
+checks pop in; progress bars roll smoothly; list entries fade in once.
+
 ## Components
 
 - Cards are grouped working surfaces, not every line item. Radius 16px, 1px border, 16–24px internal padding.
