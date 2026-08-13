@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/api/api_client.dart';
 import '../../../core/data/training_repository.dart';
+import '../../../core/theme/app_theme.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -102,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                         const Icon(
                           Icons.menu_book_rounded,
                           size: 40,
-                          color: Color(0xFF5DD6B0),
+                          color: AppColors.accent,
                         ),
                         const SizedBox(height: 18),
                         Text(
